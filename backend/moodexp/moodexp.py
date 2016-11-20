@@ -104,6 +104,12 @@ def statistic():
     return json.dumps(rows)
 
 
+@app.route('/stat', methods=['GET'])
+def stat():
+    rows = get_statistic()
+    return render_template('stat.html', students=rows)
+
+
 def split_filename(filename):
     return filename.replace('_', ' ').replace('.', ' ').split()
 

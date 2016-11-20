@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MoodExp统计分析</title>
+  </head>
+  <body>
+    {% block body %}
+    <table border="1px" bordercolor="#000000" cellspacing="0px" style="border-collapse:collapse">
+      <caption>MoodExp统计分析</caption>
+      <tr>
+        <th>姓名</th>
+        <th>学号</th>
+        <th>组别</th>
+        <th>电话</th>
+        <th>提交记录</th>
+      </tr>
+      {% for student in students %}
+      <tr>
+        <td>{{student.name}}</td>
+        <td>{{student.id}}</td>
+        <td>{{student.class}}</td>
+        <td>{{student.phone}}</td>
+        <td>
+          {% for count in student.count %}
+          {{count}}
+          {% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endblock %}
+  </body>
+</html>
