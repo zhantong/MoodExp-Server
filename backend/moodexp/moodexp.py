@@ -30,7 +30,7 @@ def register():
     student_id = request.args.get('id')
     phone = request.args.get('phone')
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_db()
     c = conn.cursor()
     c.execute("SELECT count(*) FROM users WHERE id = ?", (student_id,))
     count = c.fetchone()[0]
@@ -38,22 +38,18 @@ def register():
         c.execute("INSERT INTO users VALUES (?,?,?,?)",
                   (class_name, name, student_id, phone))
         conn.commit()
-        conn.close()
         return json.dumps({'status': True})
-    else:
-        conn.close()
-        return json.dumps({'status': False})
+    return json.dumps({'status': False})
 
 
 @app.route('/info', methods=['GET'])
 def info():
     student_id = request.args.get('id')
-    conn = sqlite3.connect(DATABASE)
+    conn = get_db()
     conn.row_factory = dict_factory
     c = conn.cursor()
     c.execute("SELECT * FROM users WHERE id = ?", (student_id,))
     info = c.fetchall()
-    conn.close()
     if info:
         info = info[0]
         info['status'] = True
@@ -65,12 +61,11 @@ def info():
 @app.route('/delete', methods=['GET'])
 def delete():
     student_id = request.args.get('id')
-    conn = sqlite3.connect(DATABASE)
+    conn = get_db()
     c = conn.cursor()
     c.execute("DELETE FROM users WHERE id = ?", (student_id,))
     c.execute("DELETE FROM uploads WHERE id = ?", (student_id,))
     conn.commit()
-    conn.close()
     return json.dumps({'status': True})
 
 
@@ -88,13 +83,12 @@ def upload():
     shutil.copyfile(FILENAME_BACKUP + '/' + orig_filename,
                     FILENAME_SECONDARY_BACKUP + '/' + random_filename)
 
-    conn = sqlite3.connect(DATABASE)
+    conn = get_db()
     c = conn.cursor()
     c.execute("INSERT INTO uploads VALUES (?,?)", (student_id, int(count)))
     c.execute("INSERT INTO second_backup (id,count,filename) VALUES (?,?,?)",
               (student_id, int(count), random_filename))
     conn.commit()
-    conn.close()
     return json.dumps({'status': True})
 
 
@@ -110,24 +104,38 @@ def stat():
     return render_template('stat.html', students=rows)
 
 
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+
+
 def split_filename(filename):
     return filename.replace('_', ' ').replace('.', ' ').split()
 
 
 def get_statistic():
-    users = []
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = dict_factory
-    c = conn.cursor()
-    c.execute("SELECT * FROM users")
-    rows = c.fetchall()
-    for row in rows:
-        student_id = row['id']
-        c.execute(
-            "SELECT count FROM uploads WHERE id = ? ORDER BY count ASC", (student_id,))
-        row['count'] = [x['count'] for x in c.fetchall()]
-    conn.close()
-    return rows
+    with app.app_context():
+        users = []
+        conn = get_db()
+        conn.row_factory = dict_factory
+        c = conn.cursor()
+        c.execute("SELECT * FROM users")
+        rows = c.fetchall()
+        for row in rows:
+            student_id = row['id']
+            c.execute(
+                "SELECT count FROM uploads WHERE id = ? ORDER BY count ASC", (student_id,))
+            row['count'] = [x['count'] for x in c.fetchall()]
+        return rows
 
 
 def init():
@@ -150,23 +158,23 @@ def dict_factory(cursor, row):
 
 
 def init_db(database_name):
-    conn = sqlite3.connect(database_name)
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS users
-                (class TEXT,
-                name TEXT,
-                id TEXT PRIMARY KEY,
-                phone TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS uploads
-                (id TEXT,
-                count INTEGER)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS second_backup
-                (id TEXT,
-                count INTEGER,
-                filename TEXT,
-                sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-    conn.commit()
-    conn.close()
+    with app.app_context():
+        conn = get_db()
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS users
+                    (class TEXT,
+                    name TEXT,
+                    id TEXT PRIMARY KEY,
+                    phone TEXT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS uploads
+                    (id TEXT,
+                    count INTEGER)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS second_backup
+                    (id TEXT,
+                    count INTEGER,
+                    filename TEXT,
+                    sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+        conn.commit()
 
 init()
 if __name__ == "__main__":
