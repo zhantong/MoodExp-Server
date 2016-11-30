@@ -1,26 +1,50 @@
 from flask import Flask
-from flask import send_from_directory
+from flask import send_file
 from flask import request
 from flask import g
 from flask import render_template
-from werkzeug.utils import secure_filename
+from flask import abort
 import json
 import os
 import shutil
-import sqlite3
+import pymysql
 import uuid
+import configparser
+import os.path
+import hashlib
 
 app = Flask(__name__)
 
-FILENAME_BACKUP = 'backup'
-FILENAME_UPLOAD = 'uploads'
-FILENAME_SECONDARY_BACKUP = 'second_backup'
-DATABASE = 'moodexp.db'
+BACKUP = 'backup'
+UPLOAD = 'uploads'
+SECONDARY_BACKUP = 'second_backup'
+DB_CONFIG_FILE = 'config.ini'
+DB_CONFIG = {
+    'user': None,
+    'password': None,
+    'host': 'localhost',
+    'db': 'moodexp',
+    'charset': 'utf8',
+    'cursorclass': pymysql.cursors.DictCursor
+}
 
 
-@app.route('/uploads/<path:filename>', methods=['GET'])
-def download_file(filename):
-    return send_from_directory(FILENAME_UPLOAD, filename)
+@app.route('/download', methods=['GET'])
+def download():
+    student_id = request.args.get('id')
+    count = int(request.args.get('count'))
+    version = request.args.get('version')
+
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("SELECT `backup_path` FROM `uploads` WHERE `id` = %s AND `count` = %s AND `version` = %s ORDER BY `timestamp` DESC LIMIT 1",
+              (student_id, count, version))
+    out = c.fetchone()
+    if out:
+        path = out['backup_path']
+        return send_file(path)
+    else:
+        abort(404)
 
 
 @app.route('/register', methods=['GET'])
@@ -32,11 +56,12 @@ def register():
 
     conn = get_db()
     c = conn.cursor()
-    c.execute("SELECT count(*) FROM users WHERE id = ?", (student_id,))
-    count = c.fetchone()[0]
+    c.execute(
+        "SELECT count(*) as count FROM `users` WHERE `id` = %s AND `is_deleted` = 0", (student_id,))
+    count = c.fetchone()['count']
     if count == 0:
-        c.execute("INSERT INTO users VALUES (?,?,?,?)",
-                  (class_name, name, student_id, phone))
+        c.execute("REPLACE INTO `users` (`class`,`name`,`id`,`phone`,`is_deleted`) VALUES (%s,%s,%s,%s,%s)",
+                  (class_name, name, student_id, phone, 0))
         conn.commit()
         return json.dumps({'status': True})
     return json.dumps({'status': False})
@@ -46,9 +71,9 @@ def register():
 def info():
     student_id = request.args.get('id')
     conn = get_db()
-    conn.row_factory = dict_factory
     c = conn.cursor()
-    c.execute("SELECT * FROM users WHERE id = ?", (student_id,))
+    c.execute(
+        "SELECT * FROM `users` WHERE `id` = %s AND `is_deleted` = 0", (student_id,))
     info = c.fetchall()
     if info:
         info = info[0]
@@ -63,8 +88,8 @@ def delete():
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
-    c.execute("DELETE FROM users WHERE id = ?", (student_id,))
-    c.execute("DELETE FROM uploads WHERE id = ?", (student_id,))
+    c.execute("UPDATE `users` SET `is_deleted` = 1 WHERE `id` = %s", (student_id,))
+    c.execute("UPDATE `uploads` SET `is_deleted` = 1 WHERE `id` = %s", (student_id,))
     conn.commit()
     return json.dumps({'status': True})
 
@@ -72,24 +97,35 @@ def delete():
 @app.route('/upload', methods=['POST'])
 def upload():
     f = request.files['file']
-    orig_filename = request.form['filename']
-    #orig_filename = f.filename
-    f.save(FILENAME_BACKUP + '/' + orig_filename)
-    student_id, count, file_ext = split_filename(orig_filename)
-    shutil.copyfile(FILENAME_BACKUP + '/' + orig_filename,
-                    FILENAME_UPLOAD + '/' + student_id + '.' + file_ext)
+    print("ok")
+    student_id = request.form['id']
+    count = int(request.form['count'])
+    version = request.form['version']
+    orig_filename = f.filename
+    file_ext = os.path.splitext(orig_filename)[1]
 
-    random_filename = str(uuid.uuid4())
-    shutil.copyfile(FILENAME_BACKUP + '/' + orig_filename,
-                    FILENAME_SECONDARY_BACKUP + '/' + random_filename)
+    backup_path = os.path.join(
+        BACKUP, version, student_id, str(count) + file_ext)
+    os.makedirs(os.path.dirname(backup_path), exist_ok=True)
+    f.save(backup_path)
+
+    upload_path = os.path.join(UPLOAD, version, student_id + file_ext)
+    os.makedirs(os.path.dirname(upload_path), exist_ok=True)
+    shutil.copyfile(backup_path, upload_path)
+
+    second_backup_path = os.path.join(
+        SECONDARY_BACKUP, version, student_id, str(uuid.uuid4()))
+    os.makedirs(os.path.dirname(second_backup_path), exist_ok=True)
+    shutil.copyfile(backup_path, second_backup_path)
+
+    sha1 = calc_sha1(backup_path)
 
     conn = get_db()
     c = conn.cursor()
-    c.execute("INSERT INTO uploads VALUES (?,?)", (student_id, int(count)))
-    c.execute("INSERT INTO second_backup (id,count,filename) VALUES (?,?,?)",
-              (student_id, int(count), random_filename))
+    c.execute("INSERT INTO `uploads` (`id`,`count`,`version`,`sha1`,`upload_path`,`backup_path`,`second_backup_path`,`is_deleted`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+              (student_id, count, version, sha1, upload_path, backup_path, second_backup_path, 0))
     conn.commit()
-    return json.dumps({'status': True})
+    return json.dumps({'status': True, 'sha1': sha1})
 
 
 @app.route('/statistic', methods=['GET'])
@@ -114,67 +150,83 @@ def close_connection(exception):
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = pymysql.connect(**DB_CONFIG)
     return db
-
-
-def split_filename(filename):
-    return filename.replace('_', ' ').replace('.', ' ').split()
 
 
 def get_statistic():
     with app.app_context():
         users = []
         conn = get_db()
-        conn.row_factory = dict_factory
         c = conn.cursor()
-        c.execute("SELECT * FROM users")
+        c.execute("SELECT * FROM `users` WHERE `is_deleted` = 0")
         rows = c.fetchall()
         for row in rows:
             student_id = row['id']
+            row['uploads'] = {}
             c.execute(
-                "SELECT count FROM uploads WHERE id = ? ORDER BY count ASC", (student_id,))
-            row['count'] = [x['count'] for x in c.fetchall()]
+                "SELECT `count`,`version` FROM uploads WHERE `id` = %s AND `is_deleted` = 0 ORDER BY `count` ASC", (student_id,))
+            for item in c.fetchall():
+                count = item['count']
+                version = item['version']
+                if not version in row['uploads']:
+                    row['uploads'][version] = []
+                row['uploads'][version].append(count)
         return rows
 
 
 def init():
-    create_dir_if_not_exists(FILENAME_BACKUP)
-    create_dir_if_not_exists(FILENAME_UPLOAD)
-    create_dir_if_not_exists(FILENAME_SECONDARY_BACKUP)
-    init_db(DATABASE)
+    os.makedirs(BACKUP, exist_ok=True)
+    os.makedirs(UPLOAD, exist_ok=True)
+    os.makedirs(SECONDARY_BACKUP, exist_ok=True)
+    load_db_user_passwd(DB_CONFIG, DB_CONFIG_FILE)
+    init_db()
 
 
-def create_dir_if_not_exists(directory):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+def load_db_user_passwd(dic, config_file_path):
+    config = configparser.ConfigParser()
+    config.read(config_file_path)
+    dic['user'] = config['database']['user']
+    dic['password'] = config['database']['password']
 
 
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
-
-
-def init_db(database_name):
+def init_db():
     with app.app_context():
         conn = get_db()
         c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS users
-                    (class TEXT,
-                    name TEXT,
-                    id TEXT PRIMARY KEY,
-                    phone TEXT)''')
-        c.execute('''CREATE TABLE IF NOT EXISTS uploads
-                    (id TEXT,
-                    count INTEGER)''')
-        c.execute('''CREATE TABLE IF NOT EXISTS second_backup
-                    (id TEXT,
-                    count INTEGER,
-                    filename TEXT,
-                    sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                    `users`
+                    (
+                    `class` VARCHAR(20),
+                    `name` VARCHAR(20),
+                    `id` VARCHAR(40),
+                    `phone` VARCHAR(20),
+                    `is_deleted` TINYINT DEFAULT 0,
+                    PRIMARY KEY (`id`)
+                    )
+                    ''')
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                    `uploads`
+                    (
+                    `id` VARCHAR(40),
+                    `count` INTEGER(4),
+                    `version` VARCHAR(20),
+                    `sha1` VARCHAR(60),
+                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    `upload_path` VARCHAR(200),
+                    `backup_path` VARCHAR(200),
+                    `second_backup_path` VARCHAR(200),
+                    `is_deleted` TINYINT DEFAULT 0
+                    )
+                    ''')
         conn.commit()
+
+
+def calc_sha1(file_path):
+    with open(file_path, 'rb') as f:
+        content = f.read()
+        sha1 = hashlib.sha1(content).hexdigest()
+        return sha1
 
 init()
 if __name__ == "__main__":

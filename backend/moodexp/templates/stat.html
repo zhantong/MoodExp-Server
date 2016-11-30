@@ -8,24 +8,46 @@
     <table border="1px" bordercolor="#000000" cellspacing="0px" style="border-collapse:collapse">
       <caption>MoodExp统计分析</caption>
       <tr>
-        <th>姓名</th>
-        <th>学号</th>
-        <th>组别</th>
-        <th>电话</th>
-        <th>提交记录</th>
+        <th rowspan="2">姓名</th>
+        <th rowspan="2">学号</th>
+        <th rowspan="2">组别</th>
+        <th rowspan="2">电话</th>
+        <th colspan="2">提交记录</th>
+      </tr>
+      <tr>
+        <th>版本</th>
+        <th>提交</th>
       </tr>
       {% for student in students %}
-      <tr>
-        <td>{{student.name}}</td>
-        <td>{{student.id}}</td>
-        <td>{{student.class}}</td>
-        <td>{{student.phone}}</td>
-        <td>
-          {% for count in student.count %}
-          {{count}}
+        {% if student.uploads|length > 0 %}
+          {% set row_span=student.uploads|length %}
+          {% set index=0 %}
+          {% for version,counts in student.uploads.items() %}
+            {% set index=index+1 %}
+            <tr>
+              {% if index==1 %}
+                <td rowspan={{row_span}}>{{student.name}}</td>
+                <td rowspan={{row_span}}>{{student.id}}</td>
+                <td rowspan={{row_span}}>{{student.class}}</td>
+                <td rowspan={{row_span}}>{{student.phone}}</td>
+              {% endif %}
+              <td>{{version}}</td>
+              <td>
+                {% for count in counts %}
+                {{count}}
+                {% endfor %}
+              </td>
+            </tr>
           {% endfor %}
-        </td>
-      </tr>
+        {% else %}
+          <tr>
+            <td>{{student.name}}</td>
+            <td>{{student.id}}</td>
+            <td>{{student.class}}</td>
+            <td>{{student.phone}}</td>
+            <td></td>
+          </tr>
+        {% endif %}
       {% endfor %}
     </table>
     {% endblock %}
