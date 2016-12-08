@@ -140,6 +140,24 @@ def stat():
     return render_template('stat.html', students=rows)
 
 
+@app.route('/version', methods=['GET', 'POST'])
+def version():
+    if request.method == 'GET':
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", ('version',))
+        version = c.fetchone()['value']
+        return json.dumps({'version': version})
+    if request.method == 'POST':
+        version = request.form['version']
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("UPDATE `meta` SET `value` = %s WHERE `name` = %s",
+                  (version, 'version'))
+        conn.commit()
+        return json.dumps({'status': True})
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -219,6 +237,17 @@ def init_db():
                     `is_deleted` TINYINT DEFAULT 0
                     )
                     ''')
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                    `meta`
+                    (
+                    `name` VARCHAR(40),
+                    `value` VARCHAR(200),
+                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    PRIMARY KEY (`name`)
+                    )
+                    ''')
+        c.execute(
+            "INSERT IGNORE INTO `meta` (`name`,`value`) VALUES (%s,%s)", ('version', '0.0.0'))
         conn.commit()
 
 
