@@ -12,6 +12,7 @@
         <th rowspan="2">学号</th>
         <th rowspan="2">组别</th>
         <th rowspan="2">电话</th>
+        <th rowspan="2">最后心跳</th>
         <th colspan="2">提交记录</th>
       </tr>
       <tr>
@@ -30,6 +31,7 @@
                 <td rowspan={{row_span}}>{{student.id}}</td>
                 <td rowspan={{row_span}}>{{student.class}}</td>
                 <td rowspan={{row_span}}>{{student.phone}}</td>
+                <td rowspan={{row_span}}>{{student.heartbeat}}</td>
               {% endif %}
               <td>{{version}}</td>
               <td>
@@ -45,6 +47,7 @@
             <td>{{student.id}}</td>
             <td>{{student.class}}</td>
             <td>{{student.phone}}</td>
+            <td>{{student.heartbeat}}</td>
             <td></td>
           </tr>
         {% endif %}

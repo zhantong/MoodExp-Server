@@ -97,7 +97,6 @@ def delete():
 @app.route('/upload', methods=['POST'])
 def upload():
     f = request.files['file']
-    print("ok")
     student_id = request.form['id']
     count = int(request.form['count'])
     version = request.form['version']
@@ -158,6 +157,16 @@ def version():
         return json.dumps({'status': True})
 
 
+@app.route('/heartbeat', methods=['GET'])
+def heartbeat():
+    student_id = request.args.get('id')
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("INSERT INTO `heartbeats` (`id`) VALUES (%s)", (student_id,))
+    conn.commit()
+    return json.dumps({'status': True})
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -190,6 +199,14 @@ def get_statistic():
                 if not version in row['uploads']:
                     row['uploads'][version] = []
                 row['uploads'][version].append(count)
+            c.execute(
+                "SELECT `timestamp` FROM `heartbeats` WHERE `id` = %s ORDER BY `timestamp` DESC LIMIT 1", (student_id,))
+            out = c.fetchone()
+            if out:
+                row['heartbeat'] = out['timestamp'].strftime(
+                    "%Y-%m-%d %H:%M:%S")
+            else:
+                row['heartbeat'] = ''
         return rows
 
 
@@ -244,6 +261,13 @@ def init_db():
                     `value` VARCHAR(200),
                     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     PRIMARY KEY (`name`)
+                    )
+                    ''')
+        c.execute('''CREATE TABLE IF NOT EXISTS
+                    `heartbeats`
+                    (
+                    `id` VARCHAR(40),
+                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )
                     ''')
         c.execute(
