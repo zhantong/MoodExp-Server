@@ -12,6 +12,7 @@ import uuid
 import configparser
 import os.path
 import hashlib
+import time
 
 app = Flask(__name__)
 
@@ -27,6 +28,8 @@ DB_CONFIG = {
     'charset': 'utf8',
     'cursorclass': pymysql.cursors.DictCursor
 }
+
+current_milli_time = lambda: str(round(time.time() * 1000))
 
 
 @app.route('/download', methods=['GET'])
@@ -104,7 +107,7 @@ def upload():
     file_ext = os.path.splitext(orig_filename)[1]
 
     backup_path = os.path.join(
-        BACKUP, version, student_id, str(count) + file_ext)
+        BACKUP, version, student_id, str(count), current_milli_time() + file_ext)
     os.makedirs(os.path.dirname(backup_path), exist_ok=True)
     f.save(backup_path)
 
@@ -243,6 +246,7 @@ def init_db():
         c.execute('''CREATE TABLE IF NOT EXISTS
                     `uploads`
                     (
+                    `auto_id` INT AUTO_INCREMENT,
                     `id` VARCHAR(40),
                     `count` INTEGER(4),
                     `version` VARCHAR(20),
@@ -251,7 +255,8 @@ def init_db():
                     `upload_path` VARCHAR(200),
                     `backup_path` VARCHAR(200),
                     `second_backup_path` VARCHAR(200),
-                    `is_deleted` TINYINT DEFAULT 0
+                    `is_deleted` TINYINT DEFAULT 0,
+                    PRIMARY KEY (`auto_id`)
                     )
                     ''')
         c.execute('''CREATE TABLE IF NOT EXISTS
