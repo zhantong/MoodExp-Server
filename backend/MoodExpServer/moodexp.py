@@ -29,19 +29,31 @@ DB_CONFIG = {
     'cursorclass': pymysql.cursors.DictCursor
 }
 
-current_milli_time = lambda: str(round(time.time() * 1000))
+
+def current_milli_time():
+    return str(round(time.time() * 1000))
 
 
 @app.route('/download', methods=['GET'])
 def download():
     student_id = request.args.get('id')
     count = int(request.args.get('count'))
-    version = request.args.get('version')
+    app_version = request.args.get('version')
 
     conn = get_db()
     c = conn.cursor()
-    c.execute("SELECT `backup_path` FROM `uploads` WHERE `id` = %s AND `count` = %s AND `version` = %s ORDER BY `timestamp` DESC LIMIT 1",
-              (student_id, count, version))
+    c.execute(
+        '''SELECT
+        `backup_path`
+        FROM
+        `uploads`
+        WHERE
+        `id` = %s AND `count` = %s AND `version` = %s
+        ORDER BY
+        `timestamp`
+        DESC
+        LIMIT 1''',
+        (student_id, count, app_version))
     out = c.fetchone()
     if out:
         path = out['backup_path']
@@ -59,12 +71,16 @@ def register():
 
     conn = get_db()
     c = conn.cursor()
-    c.execute(
-        "SELECT count(*) as count FROM `users` WHERE `id` = %s AND `is_deleted` = 0", (student_id,))
+    c.execute("SELECT count(*) AS count FROM `users` WHERE `id` = %s AND `is_deleted` = 0", (student_id,))
     count = c.fetchone()['count']
     if count == 0:
-        c.execute("REPLACE INTO `users` (`class`,`name`,`id`,`phone`,`is_deleted`) VALUES (%s,%s,%s,%s,%s)",
-                  (class_name, name, student_id, phone, 0))
+        c.execute(
+            '''REPLACE INTO
+            `users`
+            (`class`,`name`,`id`,`phone`,`is_deleted`)
+            VALUES
+            (%s,%s,%s,%s,%s)''',
+            (class_name, name, student_id, phone, 0))
         conn.commit()
         return json.dumps({'status': True})
     return json.dumps({'status': False})
@@ -75,13 +91,12 @@ def info():
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
-    c.execute(
-        "SELECT * FROM `users` WHERE `id` = %s AND `is_deleted` = 0", (student_id,))
-    info = c.fetchall()
-    if info:
-        info = info[0]
-        info['status'] = True
-        return json.dumps(info)
+    c.execute('''SELECT * FROM `users` WHERE `id` = %s AND `is_deleted` = 0''', (student_id,))
+    out = c.fetchall()
+    if out:
+        out = out[0]
+        out['status'] = True
+        return json.dumps(out)
     else:
         return json.dumps({'status': False})
 
@@ -102,21 +117,19 @@ def upload():
     f = request.files['file']
     student_id = request.form['id']
     count = int(request.form['count'])
-    version = request.form['version']
+    app_version = request.form['version']
     orig_filename = f.filename
     file_ext = os.path.splitext(orig_filename)[1]
 
-    backup_path = os.path.join(
-        BACKUP, version, student_id, str(count), current_milli_time() + file_ext)
+    backup_path = os.path.join(BACKUP, app_version, student_id, str(count), current_milli_time() + file_ext)
     os.makedirs(os.path.dirname(backup_path), exist_ok=True)
     f.save(backup_path)
 
-    upload_path = os.path.join(UPLOAD, version, student_id + file_ext)
+    upload_path = os.path.join(UPLOAD, app_version, student_id + file_ext)
     os.makedirs(os.path.dirname(upload_path), exist_ok=True)
     shutil.copyfile(backup_path, upload_path)
 
-    second_backup_path = os.path.join(
-        SECONDARY_BACKUP, version, student_id, str(uuid.uuid4()))
+    second_backup_path = os.path.join(SECONDARY_BACKUP, app_version, student_id, str(uuid.uuid4()))
     os.makedirs(os.path.dirname(second_backup_path), exist_ok=True)
     shutil.copyfile(backup_path, second_backup_path)
 
@@ -124,8 +137,13 @@ def upload():
 
     conn = get_db()
     c = conn.cursor()
-    c.execute("INSERT INTO `uploads` (`id`,`count`,`version`,`sha1`,`upload_path`,`backup_path`,`second_backup_path`,`is_deleted`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
-              (student_id, count, version, sha1, upload_path, backup_path, second_backup_path, 0))
+    c.execute(
+        '''INSERT INTO
+        `uploads`
+        (`id`,`count`,`version`,`sha1`,`upload_path`,`backup_path`,`second_backup_path`,`is_deleted`)
+        VALUES
+        (%s,%s,%s,%s,%s,%s,%s,%s)''',
+        (student_id, count, app_version, sha1, upload_path, backup_path, second_backup_path, 0))
     conn.commit()
     return json.dumps({'status': True, 'sha1': sha1})
 
@@ -148,14 +166,13 @@ def version():
         conn = get_db()
         c = conn.cursor()
         c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", ('version',))
-        version = c.fetchone()['value']
-        return json.dumps({'version': version})
+        app_version = c.fetchone()['value']
+        return json.dumps({'version': app_version})
     if request.method == 'POST':
-        version = request.form['version']
+        app_version = request.form['version']
         conn = get_db()
         c = conn.cursor()
-        c.execute("UPDATE `meta` SET `value` = %s WHERE `name` = %s",
-                  (version, 'version'))
+        c.execute("UPDATE `meta` SET `value` = %s WHERE `name` = %s", (app_version, 'version'))
         conn.commit()
         return json.dumps({'status': True})
 
@@ -186,7 +203,6 @@ def get_db():
 
 def get_statistic():
     with app.app_context():
-        users = []
         conn = get_db()
         c = conn.cursor()
         c.execute("SELECT * FROM `users` WHERE `is_deleted` = 0")
@@ -195,19 +211,36 @@ def get_statistic():
             student_id = row['id']
             row['uploads'] = {}
             c.execute(
-                "SELECT `count`,`version` FROM uploads WHERE `id` = %s AND `is_deleted` = 0 ORDER BY `count` ASC", (student_id,))
+                '''SELECT
+                `count`,`version`
+                FROM
+                `uploads`
+                WHERE
+                `id` = %s AND `is_deleted` = 0
+                ORDER BY
+                `count`
+                ASC''',
+                (student_id,))
             for item in c.fetchall():
                 count = item['count']
-                version = item['version']
-                if not version in row['uploads']:
-                    row['uploads'][version] = []
-                row['uploads'][version].append(count)
+                app_version = item['version']
+                if app_version not in row['uploads']:
+                    row['uploads'][app_version] = []
+                row['uploads'][app_version].append(count)
             c.execute(
-                "SELECT `timestamp` FROM `heartbeats` WHERE `id` = %s ORDER BY `timestamp` DESC LIMIT 1", (student_id,))
+                '''SELECT
+                `timestamp`
+                FROM
+                `heartbeats`
+                WHERE
+                `id` = %s
+                ORDER BY
+                `timestamp`
+                DESC LIMIT 1''',
+                (student_id,))
             out = c.fetchone()
             if out:
-                row['heartbeat'] = out['timestamp'].strftime(
-                    "%Y-%m-%d %H:%M:%S")
+                row['heartbeat'] = out['timestamp'].strftime("%Y-%m-%d %H:%M:%S")
             else:
                 row['heartbeat'] = ''
         return rows
@@ -232,51 +265,60 @@ def init_db():
     with app.app_context():
         conn = get_db()
         c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS
-                    `users`
-                    (
-                    `class` VARCHAR(20),
-                    `name` VARCHAR(20),
-                    `id` VARCHAR(40),
-                    `phone` VARCHAR(20),
-                    `is_deleted` TINYINT DEFAULT 0,
-                    PRIMARY KEY (`id`)
-                    )
-                    ''')
-        c.execute('''CREATE TABLE IF NOT EXISTS
-                    `uploads`
-                    (
-                    `auto_id` INT AUTO_INCREMENT,
-                    `id` VARCHAR(40),
-                    `count` INTEGER(4),
-                    `version` VARCHAR(20),
-                    `sha1` VARCHAR(60),
-                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    `upload_path` VARCHAR(200),
-                    `backup_path` VARCHAR(200),
-                    `second_backup_path` VARCHAR(200),
-                    `is_deleted` TINYINT DEFAULT 0,
-                    PRIMARY KEY (`auto_id`)
-                    )
-                    ''')
-        c.execute('''CREATE TABLE IF NOT EXISTS
-                    `meta`
-                    (
-                    `name` VARCHAR(40),
-                    `value` VARCHAR(200),
-                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    PRIMARY KEY (`name`)
-                    )
-                    ''')
-        c.execute('''CREATE TABLE IF NOT EXISTS
-                    `heartbeats`
-                    (
-                    `id` VARCHAR(40),
-                    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )
-                    ''')
         c.execute(
-            "INSERT IGNORE INTO `meta` (`name`,`value`) VALUES (%s,%s)", ('version', '0.0.0'))
+            '''CREATE TABLE IF NOT EXISTS
+            `users`
+            (
+            `class` VARCHAR(20),
+            `name` VARCHAR(20),
+            `id` VARCHAR(40),
+            `phone` VARCHAR(20),
+            `is_deleted` TINYINT DEFAULT 0,
+            PRIMARY KEY (`id`)
+            )
+            ''')
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `uploads`
+            (
+            `auto_id` INT AUTO_INCREMENT,
+            `id` VARCHAR(40),
+            `count` INTEGER(4),
+            `version` VARCHAR(20),
+            `sha1` VARCHAR(60),
+            `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `upload_path` VARCHAR(200),
+            `backup_path` VARCHAR(200),
+            `second_backup_path` VARCHAR(200),
+            `is_deleted` TINYINT DEFAULT 0,
+            PRIMARY KEY (`auto_id`)
+            )
+            ''')
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `meta`
+            (
+            `name` VARCHAR(40),
+            `value` VARCHAR(200),
+            `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`name`)
+            )
+            ''')
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `heartbeats`
+            (
+            `id` VARCHAR(40),
+            `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            ''')
+        c.execute(
+            '''INSERT IGNORE INTO
+            `meta`
+            (`name`,`value`)
+            VALUES
+            (%s,%s)''',
+            ('version', '0.0.0'))
         conn.commit()
 
 
@@ -285,6 +327,7 @@ def calc_sha1(file_path):
         content = f.read()
         sha1 = hashlib.sha1(content).hexdigest()
         return sha1
+
 
 init()
 if __name__ == "__main__":
