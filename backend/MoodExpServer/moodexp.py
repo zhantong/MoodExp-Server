@@ -236,13 +236,10 @@ def get_statistic():
                 `id` = %s
                 ORDER BY
                 `timestamp`
-                DESC LIMIT 1''',
+                DESC LIMIT 10''',
                 (student_id,))
-            out = c.fetchone()
-            if out:
-                row['heartbeat'] = out['timestamp'].strftime("%Y-%m-%d %H:%M:%S")
-            else:
-                row['heartbeat'] = ''
+            out = c.fetchall()
+            row['heartbeats'] = [item['timestamp'].strftime("%m-%d %H:%M:%S") for item in out]
         return rows
 
 
