@@ -162,17 +162,31 @@ def stat():
 
 @app.route('/version', methods=['GET', 'POST'])
 def version():
+    version_type = None
+    if request.method == 'GET':
+        version_type = request.args.get('type')
+    elif request.method == 'POST':
+        version_type = request.form['type']
+    if version_type == 'release':
+        version_type = 'version_release'
+    elif version_type == 'debug':
+        version_type = 'version_debug'
+    else:
+        abort(404)
     if request.method == 'GET':
         conn = get_db()
         c = conn.cursor()
-        c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", ('version',))
-        app_version = c.fetchone()['value']
-        return json.dumps({'version': app_version})
+        c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", (version_type,))
+        app_version = c.fetchone()
+        if app_version:
+            app_version = app_version['value']
+            return json.dumps({'status': True, 'version': app_version})
+        return json.dumps({'status': False})
     if request.method == 'POST':
         app_version = request.form['version']
         conn = get_db()
         c = conn.cursor()
-        c.execute("UPDATE `meta` SET `value` = %s WHERE `name` = %s", (app_version, 'version'))
+        c.execute("REPLACE INTO `meta` (`name`,`value`) VALUES (%s, %s)", (version_type, app_version))
         conn.commit()
         return json.dumps({'status': True})
 
@@ -342,13 +356,6 @@ def init_db():
             )
             '''
         )
-        c.execute(
-            '''INSERT IGNORE INTO
-            `meta`
-            (`name`,`value`)
-            VALUES
-            (%s,%s)''',
-            ('version', '0.0.0'))
         conn.commit()
 
 
