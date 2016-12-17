@@ -187,6 +187,28 @@ def heartbeat():
     return json.dumps({'status': True})
 
 
+@app.route('/questionnaireurl', methods=['GET', 'POST'])
+def questionnaireurl():
+    if request.method == 'GET':
+        group_id = request.args.get('group')
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("SELECT `url` FROM `questionnaire_urls` WHERE `group_id` = %s", (group_id,))
+        url = c.fetchone()
+        if url:
+            url = url['url']
+            return json.dumps({'status': True, 'url': url})
+        return json.dumps({'status': False})
+    if request.method == 'POST':
+        group_id = request.form['group']
+        url = request.form['url']
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("REPLACE INTO `questionnaire_urls` (`group_id`,`url`) VALUES (%s,%s)", (group_id, url))
+        conn.commit()
+        return json.dumps({'status': True})
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -309,6 +331,17 @@ def init_db():
             `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             ''')
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `questionnaire_urls`
+            (
+            `group_id` VARCHAR(40),
+            `url` VARCHAR(512),
+            `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`group_id`)
+            )
+            '''
+        )
         c.execute(
             '''INSERT IGNORE INTO
             `meta`
