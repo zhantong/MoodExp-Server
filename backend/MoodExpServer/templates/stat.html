@@ -1,50 +1,50 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>MoodExp统计分析</title>
-  </head>
-  <body>
-    <table border="1px" style="border-collapse:collapse">
-      <caption>MoodExp统计分析</caption>
-      <tr>
-        {% set row_span=2 %}
+</head>
+<body>
+<table border="1px" style="border-collapse:collapse">
+    <caption>MoodExp统计分析</caption>
+    <tr>
+        {% set row_span = 2 %}
         {% for item in ['姓名','学号','组别','电话','最后心跳'] %}
-        <th rowspan={{row_span}}>{{item}}</th>
+            <th rowspan={{ row_span }}>{{ item }}</th>
         {% endfor %}
         <th colspan="2">提交记录</th>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
         <th>版本</th>
         <th>提交</th>
-      </tr>
-      {% for student in students %}
+    </tr>
+    {% for student in students %}
         {% if student.uploads|length > 0 %}
-          {% set row_span=student.uploads|length %}
-          {% set index=0 %}
-          {% for version,counts in student.uploads.items() %}
-            {% set index=index+1 %}
-            <tr>
-              {% if index==1 %}
-              {% for item in [student.name,student.id,student.class,student.phone] %}
-              <td rowspan={{row_span}} style="white-space:nowrap;">{{item}}</td>
-              {% endfor %}
-              <td rowspan={{row_span}} style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
-              {% endif %}
-              <td>{{ version }}</td>
-              <td>{{ counts|join(' ') }}</td>
-            </tr>
-          {% endfor %}
-        {% else %}
-          <tr>
-            {% for item in [student.name,student.id,student.class,student.phone] %}
-            <td style="white-space:nowrap;">{{item}}</td>
+            {% set row_span = student.uploads|length %}
+            {% set index = 0 %}
+            {% for version, counts in student.uploads.items() %}
+                {% set index = index + 1 %}
+                <tr>
+                    {% if index == 1 %}
+                        {% for item in [student.name, student.id, student.class, student.phone] %}
+                            <td rowspan={{ row_span }} style="white-space:nowrap;">{{ item }}</td>
+                        {% endfor %}
+                        <td rowspan={{ row_span }} style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
+                    {% endif %}
+                    <td>{{ version }}</td>
+                    <td>{{ counts|join(' ') }}</td>
+                </tr>
             {% endfor %}
-            <td style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
-            <td></td>
-            <td></td>
-          </tr>
+        {% else %}
+            <tr>
+                {% for item in [student.name, student.id, student.class, student.phone] %}
+                    <td style="white-space:nowrap;">{{ item }}</td>
+                {% endfor %}
+                <td style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
+                <td></td>
+                <td></td>
+            </tr>
         {% endif %}
-      {% endfor %}
-    </table>
-  </body>
+    {% endfor %}
+</table>
+</body>
 </html>
