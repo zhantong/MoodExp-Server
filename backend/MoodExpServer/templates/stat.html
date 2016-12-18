@@ -4,15 +4,13 @@
     <title>MoodExp统计分析</title>
   </head>
   <body>
-    {% block body %}
-    <table border="1px" bordercolor="#000000" cellspacing="0px" style="border-collapse:collapse">
+    <table border="1px" style="border-collapse:collapse">
       <caption>MoodExp统计分析</caption>
       <tr>
-        <th rowspan="2">姓名</th>
-        <th rowspan="2">学号</th>
-        <th rowspan="2">组别</th>
-        <th rowspan="2">电话</th>
-        <th rowspan="2">最后心跳</th>
+        {% set row_span=2 %}
+        {% for item in ['姓名','学号','组别','电话','最后心跳'] %}
+        <th rowspan={{row_span}}>{{item}}</th>
+        {% endfor %}
         <th colspan="2">提交记录</th>
       </tr>
       <tr>
@@ -27,32 +25,26 @@
             {% set index=index+1 %}
             <tr>
               {% if index==1 %}
-                <td rowspan={{row_span}}>{{student.name}}</td>
-                <td rowspan={{row_span}}>{{student.id}}</td>
-                <td rowspan={{row_span}}>{{student.class}}</td>
-                <td rowspan={{row_span}}>{{student.phone}}</td>
-                <td rowspan={{row_span}} style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
+              {% for item in [student.name,student.id,student.class,student.phone] %}
+              <td rowspan={{row_span}} style="white-space:nowrap;">{{item}}</td>
+              {% endfor %}
+              <td rowspan={{row_span}} style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
               {% endif %}
-              <td>{{version}}</td>
-              <td>
-                {% for count in counts %}
-                {{count}}
-                {% endfor %}
-              </td>
+              <td>{{ version }}</td>
+              <td>{{ counts|join(' ') }}</td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td>{{student.name}}</td>
-            <td>{{student.id}}</td>
-            <td>{{student.class}}</td>
-            <td>{{student.phone}}</td>
+            {% for item in [student.name,student.id,student.class,student.phone] %}
+            <td style="white-space:nowrap;">{{item}}</td>
+            {% endfor %}
             <td style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
+            <td></td>
             <td></td>
           </tr>
         {% endif %}
       {% endfor %}
     </table>
-    {% endblock %}
   </body>
 </html>
