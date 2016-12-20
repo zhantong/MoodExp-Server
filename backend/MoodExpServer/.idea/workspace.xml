@@ -2,134 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58fda6dc-f1b1-471e-89a4-c7eb2d5132c0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/cache.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/gradle.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/HwPush_SDK_V2705.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/MiPush_SDK_Client_3_1_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/bcprov_jdk15on_1_50.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/design_23_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/gson_2_8_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/hamcrest_core_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/junit_4_12.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/mockwebserver_3_4_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/mpchartlib.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/okhttp_3_4_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/okhttp_ws_3_4_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/okio_1_9_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/recyclerview_v7_23_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/libraries/yunba_sdk_release1_8_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/runConfigurations.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/MoodExp.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/app.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/libs/HwPush_SDK_V2705.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/libs/MiPush_SDK_Client_3_1_2.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/libs/yunba-sdk-release1.8.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/proguard-rules.pro" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/androidTest/java/org/graduation/moodexp/ExampleInstrumentedTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/YunbaReceiver.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/appintro/AppIntro.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/appintro/AppIntro2.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/appintro/FadePageTransformer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/appintro/PagerAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/AudioCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/ContactCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/GpsCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/GyroscopeCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/ICollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/LightCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/MagneticCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/MyDateManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/ProcessManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/ScreenCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/StepCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/UsageCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/UsageInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/collector/WifiCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/database/DatabaseManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/database/HealthyLifeDBHelper.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/database/SharedPreferenceManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/FtpUploader.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/Guide.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/HttpRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MainActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MainApplication.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MyDate.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MyUtil.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/OptionFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/ProcessManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/Utils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/service/CollectingService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/service/FeedbackAlarmReceiver.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/service/GatherAlarmReceiver.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/service/NotificationService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/slide/FirstSlide.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/slide/FourthSlide.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/slide/SecondSlide.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/slide/ThirdSlide.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/drawable/ic_arrow_forward_white_24px.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/drawable/ic_done_white_24px.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/drawable/ic_navigate_next_white_24dp.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/drawable/indicator_dot_grey.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/drawable/indicator_dot_white.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/activity_chart.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/activity_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/content_introduction.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/content_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/content_new_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/content_query.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/content_result.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/empty_fragment.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/firstslide.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/fourthslide.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/intro_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/intro_layout2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/secondslide.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/layout/thirdslide.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/menu/menu_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/icon.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/new_welcome.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/newcoin.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/newcoin2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xhdpi/welcome.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/values-w820dp/dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/values/colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/values/dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/values/strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/res/values/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/test/java/org/graduation/moodexp/ExampleUnitTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/build/generated/mockable-android-23.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/build/intermediates/dex-cache/cache.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/gradle.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/gradle/wrapper/gradle-wrapper.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/gradle/wrapper/gradle-wrapper.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/gradlew" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/gradlew.bat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/local.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../app/MoodExp/settings.gradle" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -671,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482217538654</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="删除">
+      <created>1482225449136</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1482225449136</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -716,7 +595,8 @@
     <MESSAGE value="修正格式" />
     <MESSAGE value="统计依照最新版本和学号排序" />
     <MESSAGE value="上次排序问题交由SQL实现&#10;效率提升" />
-    <option name="LAST_COMMIT_MESSAGE" value="上次排序问题交由SQL实现&#10;效率提升" />
+    <MESSAGE value="删除" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
