@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58fda6dc-f1b1-471e-89a4-c7eb2d5132c0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExpHttpUtils/app/src/main/java/cn/edu/nju/dislab/moodexphttputils/MainActivity.java" afterPath="$PROJECT_DIR$/../../app/MoodExpHttpUtils/app/src/main/java/cn/edu/nju/dislab/moodexphttputils/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/../../app/MoodExp/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../app/MoodExp/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/app.iml" afterPath="$PROJECT_DIR$/../../app/MoodExp/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/YunbaReceiver.java" afterPath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/YunbaReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MainActivity.java" afterPath="$PROJECT_DIR$/../../app/MoodExp/app/src/main/java/org/graduation/moodexp/healthylife/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../app/MoodExp/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/../../app/MoodExp/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/MoodExpServer$moodexp.coverage" NAME="moodexp Coverage Results" MODIFIED="1482038693507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MoodExpServer$moodexp.coverage" NAME="moodexp Coverage Results" MODIFIED="1482217439328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -28,34 +41,38 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="moodexp.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="moodexp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/moodexp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3285">
-              <caret line="233" column="38" lean-forward="false" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="38" />
+            <state relative-caret-position="222">
+              <caret line="270" column="27" lean-forward="false" selection-start-line="270" selection-start-column="27" selection-end-line="270" selection-end-column="27" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-                <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-                <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-                <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-                <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-                <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-                <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-                <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-                <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-                <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-                <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-                <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-                <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-                <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-                <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-                <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-                <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-                <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-                <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-                <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-                <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
+                <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+                <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+                <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+                <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+                <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+                <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+                <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+                <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+                <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+                <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+                <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+                <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+                <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+                <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+                <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+                <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+                <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+                <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+                <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+                <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+                <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+                <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+                <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+                <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+                <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
               </folding>
             </state>
           </provider>
@@ -86,16 +103,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stat.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stat.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/stat.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-              <folding>
-                <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="360">
+              <caret line="24" column="58" lean-forward="false" selection-start-line="24" selection-start-column="58" selection-end-line="24" selection-end-column="58" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,8 +131,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="/MySQL Fragment (moodexp.py:889).sql" />
-        <option value="$PROJECT_DIR$/moodexp.py" />
         <option value="$PROJECT_DIR$/templates/stat.html" />
+        <option value="$PROJECT_DIR$/moodexp.py" />
       </list>
     </option>
   </component>
@@ -151,7 +164,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -208,6 +220,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -532,17 +545,32 @@
       <option name="project" value="LOCAL" />
       <updated>1482039118912</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="统计依照最新版本和学号排序">
+      <created>1482201253976</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1482201253976</updated>
+    </task>
+    <task id="LOCAL-00011" summary="上次排序问题交由SQL实现&#10;效率提升">
+      <created>1482217538654</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1482217538654</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2603834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2630458" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32882413" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882413" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -555,7 +583,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -575,7 +602,9 @@
     <MESSAGE value="优化heartbeat显示" />
     <MESSAGE value="优化table显示" />
     <MESSAGE value="修正格式" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正格式" />
+    <MESSAGE value="统计依照最新版本和学号排序" />
+    <MESSAGE value="上次排序问题交由SQL实现&#10;效率提升" />
+    <option name="LAST_COMMIT_MESSAGE" value="上次排序问题交由SQL实现&#10;效率提升" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -588,27 +617,31 @@
           <caret line="233" column="38" lean-forward="false" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="38" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-            <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-            <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-            <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-            <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-            <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-            <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-            <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-            <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-            <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-            <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-            <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-            <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-            <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-            <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
         </state>
       </provider>
@@ -638,11 +671,71 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/moodexp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3285">
+          <caret line="233" column="38" lean-forward="false" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="38" />
           <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alterCountAsDirectory/modify_mysql.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1481546109000" expanded="true" signature="469:556" ph="SELECT `auto... uploads" />
+            <marker date="1481546109000" expanded="true" signature="620:680" ph="UPDATE `uplo... " />
+            <marker date="1481546109000" expanded="true" signature="1330:1386" ph="SELECT `back... uploads" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/stat.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -652,27 +745,31 @@
           <caret line="249" column="27" lean-forward="true" selection-start-line="249" selection-start-column="27" selection-end-line="249" selection-end-column="27" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-            <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-            <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-            <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-            <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-            <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-            <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-            <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-            <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-            <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-            <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-            <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-            <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-            <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-            <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
         </state>
       </provider>
@@ -702,11 +799,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="43" lean-forward="false" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -716,27 +809,31 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-            <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-            <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-            <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-            <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-            <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-            <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-            <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-            <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-            <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-            <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-            <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-            <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-            <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-            <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
         </state>
       </provider>
@@ -766,11 +863,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="43" lean-forward="true" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -780,27 +873,31 @@
           <caret line="320" column="33" lean-forward="true" selection-start-line="320" selection-start-column="33" selection-end-line="320" selection-end-column="33" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-            <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-            <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-            <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-            <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-            <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-            <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-            <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-            <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-            <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-            <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-            <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-            <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-            <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-            <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
         </state>
       </provider>
@@ -830,11 +927,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -882,6 +975,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/stat.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="58" lean-forward="false" selection-start-line="24" selection-start-column="58" selection-end-line="24" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/alterCountAsDirectory/modify_mysql.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -897,43 +998,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/moodexp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3285">
-          <caret line="233" column="38" lean-forward="false" selection-start-line="233" selection-start-column="38" selection-end-line="233" selection-end-column="38" />
+        <state relative-caret-position="222">
+          <caret line="270" column="27" lean-forward="false" selection-start-line="270" selection-start-column="27" selection-end-line="270" selection-end-column="27" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1481969946000" expanded="true" signature="905:911" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="905:1098" ph="SELECT `back... uploads" />
-            <marker date="1481969946000" expanded="true" signature="1548:1622" ph="SELECT count... users" />
-            <marker date="1481969946000" expanded="true" signature="1727:1862" ph="REPLACE INTO... users" />
-            <marker date="1481969946000" expanded="true" signature="2178:2236" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="2579:2630" ph="UPDATE `user... " />
-            <marker date="1481969946000" expanded="true" signature="2663:2716" ph="UPDATE `uplo... " />
-            <marker date="1481969946000" expanded="true" signature="3780:3960" ph="INSERT INTO uploads" />
-            <marker date="1481969946000" expanded="true" signature="4909:4953" ph="SELECT `valu... meta" />
-            <marker date="1481969946000" expanded="true" signature="5344:5396" ph="REPLACE INTO... meta" />
-            <marker date="1481969946000" expanded="true" signature="5652:5695" ph="INSERT INTO `heartbeats`... " />
-            <marker date="1481969946000" expanded="true" signature="6000:6060" ph="SELECT `url`... questionnaire_urls" />
-            <marker date="1481969946000" expanded="true" signature="6430:6497" ph="REPLACE INTO... questionnaire_links" />
-            <marker date="1481969946000" expanded="true" signature="6988:7032" ph="SELECT * FRO... users" />
-            <marker date="1481969946000" expanded="true" signature="7197:7422" ph="SELECT `coun... uploads" />
-            <marker date="1481969946000" expanded="true" signature="7787:8002" ph="SELECT `time... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="8742:9019" ph="CREATE TABLE... users" />
-            <marker date="1481969946000" expanded="true" signature="9071:9586" ph="CREATE TABLE... uploads" />
-            <marker date="1481969946000" expanded="true" signature="9638:9899" ph="CREATE TABLE... meta" />
-            <marker date="1481969946000" expanded="true" signature="9951:10120" ph="CREATE TABLE... heartbeats" />
-            <marker date="1481969946000" expanded="true" signature="10172:10453" ph="CREATE TABLE... questionnaire_urls" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/stat.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1482217499000" expanded="true" signature="941:947" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="941:1134" ph="SELECT `back... uploads" />
+            <marker date="1482217499000" expanded="true" signature="1584:1658" ph="SELECT count... users" />
+            <marker date="1482217499000" expanded="true" signature="1763:1898" ph="REPLACE INTO... users" />
+            <marker date="1482217499000" expanded="true" signature="2214:2272" ph="SELECT * FRO... users" />
+            <marker date="1482217499000" expanded="true" signature="2615:2666" ph="UPDATE `user... " />
+            <marker date="1482217499000" expanded="true" signature="2699:2752" ph="UPDATE `uplo... " />
+            <marker date="1482217499000" expanded="true" signature="3816:3996" ph="INSERT INTO uploads" />
+            <marker date="1482217499000" expanded="true" signature="4945:4989" ph="SELECT `valu... meta" />
+            <marker date="1482217499000" expanded="true" signature="5380:5432" ph="REPLACE INTO... meta" />
+            <marker date="1482217499000" expanded="true" signature="5688:5731" ph="INSERT INTO `heartbeats`... " />
+            <marker date="1482217499000" expanded="true" signature="6036:6096" ph="SELECT `url`... questionnaire_urls" />
+            <marker date="1482217499000" expanded="true" signature="6466:6533" ph="REPLACE INTO... questionnaire_links" />
+            <marker date="1482217499000" expanded="true" signature="7103:8289" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:7142" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7104:8022" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7409" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7297:7829" ph="SELECT class... class" />
+            <marker date="1482217499000" expanded="true" signature="7490:7716" ph="SELECT a.cla... users" />
+            <marker date="1482217499000" expanded="true" signature="8309:8524" ph="SELECT `time... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="9264:9541" ph="CREATE TABLE... users" />
+            <marker date="1482217499000" expanded="true" signature="9593:10108" ph="CREATE TABLE... uploads" />
+            <marker date="1482217499000" expanded="true" signature="10160:10421" ph="CREATE TABLE... meta" />
+            <marker date="1482217499000" expanded="true" signature="10473:10642" ph="CREATE TABLE... heartbeats" />
+            <marker date="1482217499000" expanded="true" signature="10694:10975" ph="CREATE TABLE... questionnaire_urls" />
           </folding>
         </state>
       </provider>
