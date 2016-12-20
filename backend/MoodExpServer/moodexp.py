@@ -13,6 +13,7 @@ import configparser
 import os.path
 import hashlib
 import time
+import collections
 
 app = Flask(__name__)
 
@@ -263,6 +264,7 @@ def get_statistic():
                 if app_version not in row['uploads']:
                     row['uploads'][app_version] = []
                 row['uploads'][app_version].append(count)
+            row['uploads'] = list(collections.OrderedDict(sorted(row['uploads'].items(), reverse=True)).items())
             c.execute(
                 '''SELECT
                 `timestamp`
@@ -276,6 +278,7 @@ def get_statistic():
                 (student_id,))
             out = c.fetchall()
             row['heartbeats'] = [item['timestamp'].strftime("%m-%d %H:%M:%S") for item in out]
+        rows = sorted(rows, key=lambda k: k['uploads'][0][0] if k['uploads'] else '0', reverse=True)
         return rows
 
 
