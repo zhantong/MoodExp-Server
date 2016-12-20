@@ -19,7 +19,7 @@
     </tr>
     {% for student in students %}
         {% set students_loop = loop %}
-        {% if student.uploads|length > 0 %}
+        {% if student.uploads %}
             {% set row_span = student.uploads|length %}
             {% set index = 0 %}
             {% for (version, counts) in student.uploads %}

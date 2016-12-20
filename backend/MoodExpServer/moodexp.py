@@ -13,7 +13,7 @@ import configparser
 import os.path
 import hashlib
 import time
-import collections
+from collections import OrderedDict
 
 app = Flask(__name__)
 
@@ -242,29 +242,38 @@ def get_statistic():
     with app.app_context():
         conn = get_db()
         c = conn.cursor()
-        c.execute("SELECT * FROM `users` WHERE `is_deleted` = 0")
+        c.execute("SET SESSION group_concat_max_len = 1000000")
+        c.execute(
+            '''SELECT
+            class,name,id,phone,
+            CONCAT('{',GROUP_CONCAT('"',version,'"',':',count_group ORDER BY version DESC),'}') AS uploads
+            FROM
+            (
+                SELECT
+                class,name,id,phone,version,
+                CONCAT('[',GROUP_CONCAT(count ORDER BY count),']') AS count_group
+                FROM
+                (
+                    SELECT
+                    a.class,a.name,a.id,a.phone,b.count,b.version
+                    FROM `users` AS a
+                    LEFT JOIN `uploads` AS b
+                    ON a.id=b.id AND a.is_deleted=0 AND b.is_deleted=0
+                ) AS c
+                GROUP BY id,version
+                ORDER BY version
+                DESC
+            ) AS d
+            GROUP BY id
+            ORDER BY max(INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)))
+            DESC,id
+            ''')
         rows = c.fetchall()
         for row in rows:
             student_id = row['id']
-            row['uploads'] = {}
-            c.execute(
-                '''SELECT
-                `count`,`version`
-                FROM
-                `uploads`
-                WHERE
-                `id` = %s AND `is_deleted` = 0
-                ORDER BY
-                `count`
-                ASC''',
-                (student_id,))
-            for item in c.fetchall():
-                count = item['count']
-                app_version = item['version']
-                if app_version not in row['uploads']:
-                    row['uploads'][app_version] = []
-                row['uploads'][app_version].append(count)
-            row['uploads'] = list(collections.OrderedDict(sorted(row['uploads'].items(), reverse=True)).items())
+            if row['uploads']:
+                row['uploads'] = json.loads(row['uploads'], object_pairs_hook=OrderedDict)
+                row['uploads'] = list(row['uploads'].items())
             c.execute(
                 '''SELECT
                 `timestamp`
@@ -278,7 +287,6 @@ def get_statistic():
                 (student_id,))
             out = c.fetchall()
             row['heartbeats'] = [item['timestamp'].strftime("%m-%d %H:%M:%S") for item in out]
-        rows = sorted(rows, key=lambda k: k['uploads'][0][0] if k['uploads'] else '0', reverse=True)
         return rows
 
 
