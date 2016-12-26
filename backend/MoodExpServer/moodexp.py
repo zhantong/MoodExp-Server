@@ -14,6 +14,7 @@ import os.path
 import hashlib
 import time
 from collections import OrderedDict
+from distutils.version import StrictVersion
 
 app = Flask(__name__)
 
@@ -92,7 +93,7 @@ def info():
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
-    c.execute('''SELECT * FROM `users` WHERE `id` = %s AND `is_deleted` = 0''', (student_id,))
+    c.execute('''SELECT `class`,`name`,`id`,`phone` FROM `users` WHERE `id` = %s AND `is_deleted` = 0''', (student_id,))
     out = c.fetchall()
     if out:
         out = out[0]
@@ -190,6 +191,41 @@ def version():
         c.execute("REPLACE INTO `meta` (`name`,`value`) VALUES (%s, %s)", (version_type, app_version))
         conn.commit()
         return json.dumps({'status': True})
+
+
+@app.route('/checkUpdate', methods=['GET', 'POST'])
+def check_update():
+    if request.method == 'GET':
+        student_id = request.args.get('id')
+        student_version = request.args.get('version')
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", 'version')
+        app_version = c.fetchone()
+        if app_version:
+            app_version = app_version['value']
+        c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", 'url')
+        app_url = c.fetchone()
+        if app_url:
+            app_url = app_url['value']
+        if app_version and app_url:
+            if StrictVersion(student_version) < StrictVersion(app_version):
+                return json.dumps(
+                    {'status': True, 'has_update': True, 'latest_version': app_version, 'latest_url': app_url})
+            else:
+                return json.dumps({'status': True, 'has_update': False})
+        return json.dumps({'status': False})
+    if request.method == 'POST':
+        app_version = request.form['version']
+        app_url = request.form['url']
+        if app_version and app_url:
+            conn = get_db()
+            c = conn.cursor()
+            c.execute("REPLACE INTO `meta` (`name`,`value`) VALUES (%s, %s)", ('version', app_version))
+            c.execute("REPLACE INTO `meta` (`name`,`value`) VALUES (%s, %s)", ('url', app_url))
+            conn.commit()
+            return json.dumps({'status': True})
+        return json.dumps({'status': False})
 
 
 @app.route('/heartbeat', methods=['GET'])
