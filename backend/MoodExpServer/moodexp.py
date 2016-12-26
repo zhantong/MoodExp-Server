@@ -228,6 +228,13 @@ def check_update():
         return json.dumps({'status': False})
 
 
+@app.route('/survey', methods=['GET'])
+def survey():
+    student_id = request.args.get('id')
+    with open('survey/survey.json', encoding='utf-8') as f:
+        return json.dumps({'status': True, 'survey': json.dumps(json.loads(f.read()))})
+
+
 @app.route('/heartbeat', methods=['GET'])
 def heartbeat():
     student_id = request.args.get('id')
