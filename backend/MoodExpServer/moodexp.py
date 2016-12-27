@@ -85,7 +85,7 @@ def register():
             (class_name, name, student_id, phone, 0))
         conn.commit()
         return json.dumps({'status': True})
-    return json.dumps({'status': False})
+    return json.dumps({'status': False, 'message': '学号已注册。'})
 
 
 @app.route('/info', methods=['GET'])
