@@ -100,7 +100,7 @@ def info():
         out['status'] = True
         return json.dumps(out)
     else:
-        return json.dumps({'status': False})
+        return json.dumps({'status': False,'message':'用户名不存在'})
 
 
 @app.route('/delete', methods=['GET'])
@@ -231,10 +231,77 @@ def check_update():
 @app.route('/survey', methods=['GET'])
 def survey():
     student_id = request.args.get('id')
-    with open('survey/survey.json', encoding='utf-8') as f:
-        return json.dumps({'status': True, 'survey': json.dumps(json.loads(f.read()))})
+    conn=get_db()
+    c=conn.cursor()
+    survey_id=1
+    session=str(uuid.uuid4())
+    result={
+        'id':survey_id,
+        'session':session,
+        'questions':[]
+    }
+    c.execute("INSERT INTO `survey_uploads` (id, survey_id, session) VALUES (%s, %s, %s)", (student_id, survey_id, session))
+    conn.commit()
+    c.execute("SELECT question_id FROM `survey` WHERE id = %s",(survey_id,))
+    question_ids=[item['question_id'] for item in c.fetchall()]
+    for question_id in question_ids:
+        c.execute("SELECT * FROM `question` WHERE id = %s",(question_id,))
+        question=c.fetchone()
+        if question:
+            if question['has_choices']:
+                c.execute("SELECT b.id AS id,b.description AS description FROM `choices` AS a JOIN `choice` AS b ON a.choice_id = b.id WHERE a.id = %s",(question['choices_id']))
+                question['choices']=c.fetchall()
+            if question['has_children']:
+                c.execute("SELECT b.* FROM `children` AS a JOIN `question` AS b ON a.question_id = b.id WHERE a.id = %s",(question['children_id']))
+                child_questions=c.fetchall()
+                question['questions']=[]
+                for child_question in child_questions:
+                    if child_question['has_choices']:
+                        c.execute(
+                            "SELECT b.id AS id,b.description AS description FROM `choices` AS a JOIN `choice` AS b ON a.choice_id = b.id WHERE a.id = %s",
+                            (child_question['choices_id']))
+                        child_question['choices'] = c.fetchall()
+                    question['questions'].append(child_question)
+            result['questions'].append(question)
+    return json.dumps({'status':True,'survey':json.dumps(result)})
 
 
+    # student_id = request.args.get('id')
+    # with open('survey/survey.json', encoding='utf-8') as f:
+    #     return json.dumps({'status': True, 'survey': json.dumps(json.loads(f.read()))})
+
+@app.route('/submitSurvey',methods=['POST'])
+def submit_survey():
+    student_id = request.form['id']
+    session = request.form['session']
+    answer=request.form['answer']
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("SELECT count(*) AS count FROM `survey_uploads` WHERE `session` = %s", (session,))
+    count = c.fetchone()['count']
+    if count == 0:
+        return json.dumps({'status':False,'message':"非法提交"})
+    c.execute("SELECT count(*) AS count FROM `survey_uploads` WHERE session = %s AND is_uploaded = 1", (session,))
+    count = c.fetchone()['count']
+    if count==0:
+        c.execute("UPDATE `survey_uploads` SET is_uploaded = 1, upload_time = NOW(), answer = %s WHERE session = %s",(answer,session))
+        conn.commit()
+        return json.dumps({'status':True})
+    else:
+        return json.dumps({'status':False,'message':"请勿重复提交"})
+
+@app.route('/surveyStat',methods=['GET'])
+def survey_stat():
+    student_id = request.args.get('id')
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("SELECT count(*) AS count FROM `survey_uploads` WHERE id = %s AND is_uploaded = 1", (student_id,))
+    count = c.fetchone()['count']
+    return json.dumps({'status':True,'count':count,'max_count':30})
+
+@app.route('/getApk',methods=['GET'])
+def get_apk():
+    return send_file('apk/app.apk')
 @app.route('/heartbeat', methods=['GET'])
 def heartbeat():
     student_id = request.args.get('id')
