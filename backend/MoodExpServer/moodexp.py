@@ -244,7 +244,7 @@ def survey():
         last_uplod_time = last_uplod_time['upload_time']
         next_upload_time = last_uplod_time + INTERVAL
         if datetime.now() < next_upload_time:
-            return json.dumps({'status': False, 'message': '您的提交频率太快，下次提交时间为：' + str(next_upload_time)})
+            return json.dumps({'status': False, 'message': '您的提交频率太快，下次提交时间为：' + str(next_upload_time)+' 之后'})
     survey_id = 1
     session = str(uuid.uuid4())
     result = {
@@ -286,7 +286,15 @@ def survey():
     # student_id = request.args.get('id')
     # with open('survey/survey.json', encoding='utf-8') as f:
     #     return json.dumps({'status': True, 'survey': json.dumps(json.loads(f.read()))})
-
+@app.route('/feedback',methods=['GET'])
+def feedback():
+    student_id = request.args.get('id')
+    content=request.args.get('feedback')
+    conn = get_db()
+    c = conn.cursor()
+    c.execute("INSERT INTO `feedback` (id,feedback) VALUES (%s, %s)",(student_id,content))
+    conn.commit()
+    return json.dumps({'status': True})
 
 @app.route('/submitSurvey', methods=['POST'])
 def submit_survey():
