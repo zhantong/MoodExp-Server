@@ -123,7 +123,8 @@ def upload():
     count = int(request.form['count'])
     app_version = request.form['version']
     orig_filename = f.filename
-    file_ext = os.path.splitext(orig_filename)[1]
+    file_ext = '.' + orig_filename.split(os.extsep, 1)[-1]
+    # file_ext = os.path.splitext(orig_filename)[1]
 
     backup_path = os.path.join(BACKUP, app_version, student_id, str(count), current_milli_time() + file_ext)
     os.makedirs(os.path.dirname(backup_path), exist_ok=True)
@@ -202,6 +203,8 @@ def check_update():
         student_version = request.args.get('version')
         conn = get_db()
         c = conn.cursor()
+        c.execute("INSERT INTO `user_versions` (id, version) VALUES (%s, %s)", (student_id, student_version))
+        conn.commit()
         c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", 'version')
         app_version = c.fetchone()
         if app_version:
@@ -244,7 +247,7 @@ def survey():
         last_uplod_time = last_uplod_time['upload_time']
         next_upload_time = last_uplod_time + INTERVAL
         if datetime.now() < next_upload_time:
-            return json.dumps({'status': False, 'message': '您的提交频率太快，下次提交时间为：' + str(next_upload_time)+' 之后'})
+            return json.dumps({'status': False, 'message': '您的提交频率太快，下次提交时间为：' + str(next_upload_time) + ' 之后'})
     survey_id = 1
     session = str(uuid.uuid4())
     result = {
@@ -258,7 +261,9 @@ def survey():
     c.execute("SELECT question_id FROM `survey` WHERE id = %s", (survey_id,))
     question_ids = [item['question_id'] for item in c.fetchall()]
     for question_id in question_ids:
-        c.execute("SELECT * FROM `question` WHERE id = %s", (question_id,))
+        c.execute(
+            "SELECT id, type, title, description, choices_id, children_id, has_title, has_description, has_choices, has_children FROM `question` WHERE id = %s",
+            (question_id,))
         question = c.fetchone()
         if question:
             if question['has_choices']:
@@ -268,7 +273,7 @@ def survey():
                 question['choices'] = c.fetchall()
             if question['has_children']:
                 c.execute(
-                    "SELECT b.* FROM `children` AS a JOIN `question` AS b ON a.question_id = b.id WHERE a.id = %s",
+                    "SELECT b.id AS id, b.type AS type, b.title AS title, b.description AS description, b.choices_id AS choices_id, b.children_id AS children_id, b.has_title AS has_title, b.has_description AS has_description, b.has_choices AS has_choices, b.has_children AS has_children FROM `children` AS a JOIN `question` AS b ON a.question_id = b.id WHERE a.id = %s",
                     (question['children_id']))
                 child_questions = c.fetchall()
                 question['questions'] = []
@@ -283,22 +288,22 @@ def survey():
     return json.dumps({'status': True, 'survey': json.dumps(result)})
 
 
-    # student_id = request.args.get('id')
-    # with open('survey/survey.json', encoding='utf-8') as f:
-    #     return json.dumps({'status': True, 'survey': json.dumps(json.loads(f.read()))})
-@app.route('/feedback',methods=['GET'])
+@app.route('/feedback', methods=['GET'])
 def feedback():
     student_id = request.args.get('id')
-    content=request.args.get('feedback')
+    content = request.args.get('feedback')
     conn = get_db()
     c = conn.cursor()
-    c.execute("INSERT INTO `feedback` (id,feedback) VALUES (%s, %s)",(student_id,content))
+    c.execute("INSERT INTO `feedback` (id,feedback) VALUES (%s, %s)", (student_id, content))
     conn.commit()
     return json.dumps({'status': True})
+
 
 @app.route('/submitSurvey', methods=['POST'])
 def submit_survey():
     student_id = request.form['id']
+    if not student_id:
+        abort(404)
     session = request.form['session']
     answer = request.form['answer']
     conn = get_db()
@@ -312,6 +317,20 @@ def submit_survey():
     if count == 0:
         c.execute("UPDATE `survey_uploads` SET is_uploaded = 1, upload_time = NOW(), answer = %s WHERE session = %s",
                   (answer, session))
+        survey_answer = json.loads(answer)
+        survey_id = survey_answer['id']
+        answers = survey_answer['answers']
+        for item in answers:
+            question_id = item['question_id']
+            answer = None
+            if item['answer']:
+                answer = item['answer']
+            answer_id = None
+            if item['id']:
+                answer_id = item['id']
+            c.execute(
+                "INSERT INTO `answers` (session, survey_id, question_id, answer_id,answer) VALUES (%s,%s,%s,%s,%s)",
+                (session, survey_id, question_id, answer_id, answer))
         conn.commit()
         return json.dumps({'status': True})
     else:
@@ -508,6 +527,127 @@ def init_db():
             )
             '''
         )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `survey`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id INT,
+            question_id INT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `question`
+            (
+            id INT,
+            type VARCHAR(20) NOT NULL,
+            title VARCHAR(100),
+            description VARCHAR(200),
+            choices_id INT,
+            children_id INT,
+            has_title TINYINT(1) DEFAULT 0,
+            has_description TINYINT(1) DEFAULT 0,
+            has_choices TINYINT(1) DEFAULT 0,
+            has_children TINYINT(1) DEFAULT 0,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `choices`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id INT,
+            choice_id INT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `children`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id INT,
+            question_id INT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `choice`
+            (
+            id INT,
+            description VARCHAR(200) NOT NULL,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `survey_uploads`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id VARCHAR(40) NOT NULL,
+            survey_id INT NOT NULL,
+            session VARCHAR(50) NOT NULL UNIQUE,
+            request_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            is_uploaded TINYINT(1) DEFAULT 0,
+            upload_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            answer TEXT,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `answers`
+            (
+            auto_id INT AUTO_INCREMENT,
+            session VARCHAR(50) NOT NULL,
+            survey_id INT NOT NULL,
+            question_id INT NOT NULL,
+            answer_id INT,
+            answer TEXT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `feedback`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id VARCHAR(40) NOT NULL,
+            feedback TEXT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `user_versions`
+            (
+            auto_id INT AUTO_INCREMENT,
+            id VARCHAR(40) NOT NULL,
+            version VARCHAR(10),
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (auto_id)
+            )
+            '''
+        )
         conn.commit()
 
 
@@ -520,4 +660,4 @@ def calc_sha1(file_path):
 
 init()
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
