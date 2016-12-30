@@ -338,14 +338,47 @@ def submit_survey():
         return json.dumps({'status': False, 'message': "请勿重复提交"})
 
 
-@app.route('/surveyStat', methods=['GET'])
-def survey_stat():
+@app.route('/surveyCount', methods=['GET'])
+def survey_count():
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
     c.execute("SELECT count(*) AS count FROM `survey_uploads` WHERE id = %s AND is_uploaded = 1", (student_id,))
     count = c.fetchone()['count']
-    return json.dumps({'status': True, 'count': count, 'max_count': 30})
+    message = '您当前已提交 {count} 次，目标次数为 30 次。'.format(count=count)
+    if count >= 30:
+        message = '恭喜您已完成 30 次提交！当前已提交 {count} 次，目标次数为 60 次。'.format(count=count)
+    return json.dumps({'status': True, 'count': count, 'max_count': 30, 'message': message,
+                       'url': request.url_root + 'surveyStat?id=' + student_id})
+
+
+@app.route('/surveyStat', methods=['GET'])
+def survey_stat():
+    student_id = request.args.get('id')
+    conn = get_db()
+    c = conn.cursor()
+
+    c.execute(
+        "SELECT session, upload_time FROM `survey_uploads` WHERE id = %s AND is_uploaded = 1 ORDER BY upload_time",
+        (student_id,))
+    surveies = c.fetchall()
+    surveies_by_day = {}
+    for survey in surveies:
+        survey_datetime = survey['upload_time']
+        session = survey['session']
+        c.execute(
+            "SELECT question.title, answers.answer FROM `answers` AS answers, `question` AS question WHERE answers.question_id = question.id AND answers.session = %s ORDER BY question.id",
+            (session,))
+        content = c.fetchall()
+        survey_date = survey_datetime.strftime('%Y-%m-%d')
+        if survey_date not in surveies_by_day:
+            surveies_by_day[survey_date] = []
+        surveies_by_day[survey_date].append({
+            'time': survey_datetime.strftime('%H:%M:%S'),
+            'answers': content
+        })
+    surveies_by_day = list(OrderedDict(sorted(surveies_by_day.items())).items())
+    return render_template('surveies_stat.html', surveies_by_day=surveies_by_day)
 
 
 @app.route('/apk/<path:filename>', methods=['GET'])

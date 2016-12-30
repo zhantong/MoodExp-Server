@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <title>情绪问卷统计分析</title>
+</head>
+<body>
+{% for date, surveies in surveies_by_day %}
+    <table border="1px" style="border-collapse:collapse">
+        <caption>{{ date }}</caption>
+        <thead>
+        <tr>
+            <th>时间</th>
+            {% for item in surveies[0]['answers'] %}
+                <th>{{ item['title'] }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for survey in surveies %}
+            <tr>
+                <th>{{ survey.time }}</th>
+                {% for answer in survey.answers %}
+                    <th>{{ answer['answer'] }}</th>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+</body>
+</html>
