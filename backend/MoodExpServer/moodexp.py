@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import send_file
+from flask import send_from_directory
 from flask import request
 from flask import g
 from flask import render_template
@@ -347,9 +348,9 @@ def survey_stat():
     return json.dumps({'status': True, 'count': count, 'max_count': 30})
 
 
-@app.route('/getApk', methods=['GET'])
-def get_apk():
-    return send_file('apk/app.apk')
+@app.route('/apk/<path:filename>', methods=['GET'])
+def apk(filename):
+    return send_from_directory(directory='apk', filename=filename)
 
 
 @app.route('/heartbeat', methods=['GET'])
@@ -404,49 +405,74 @@ def get_statistic():
         c = conn.cursor()
         c.execute("SET SESSION group_concat_max_len = 1000000")
         c.execute(
-            '''SELECT
-            class,name,id,phone,
-            CONCAT('{',GROUP_CONCAT('"',version,'"',':',count_group ORDER BY version DESC),'}') AS uploads
+            '''
+            SELECT
+                users.name, users.id, users.phone, heartbeats.latest_heartbeat, heartbeats.recent_heartbeats,
+                versions.latest_version, survies.latest_survey, survies.recent_surveies, survies.survey_count,
+                uploads.latest_upload, uploads.recent_uploads, uploads.upload_count
             FROM
-            (
+              `users` AS users
+            LEFT JOIN (
                 SELECT
-                class,name,id,phone,version,
-                CONCAT('[',GROUP_CONCAT(count ORDER BY count),']') AS count_group
+                    id, MAX(timestamp) AS latest_heartbeat,
+                    SUBSTRING_INDEX(GROUP_CONCAT(timestamp ORDER BY timestamp DESC), ',', 10) AS recent_heartbeats
                 FROM
-                (
-                    SELECT
-                    a.class,a.name,a.id,a.phone,b.count,b.version
-                    FROM `users` AS a
-                    LEFT JOIN `uploads` AS b
-                    ON a.id=b.id AND a.is_deleted=0 AND b.is_deleted=0
-                ) AS c
-                GROUP BY id,version
-                ORDER BY version
-                DESC
-            ) AS d
-            GROUP BY id
-            ORDER BY max(INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)))
-            DESC,id
-            ''')
+                    `heartbeats`
+                GROUP BY id
+            ) AS heartbeats
+            ON users.id = heartbeats.id
+            LEFT JOIN (
+                SELECT
+                    id,
+                    SUBSTRING_INDEX(GROUP_CONCAT(version ORDER BY INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) DESC),',',1) AS latest_version
+                FROM
+                    `user_versions`
+                GROUP BY id
+            ) AS versions
+            ON users.id = versions.id
+            LEFT JOIN (
+                SELECT
+                    id, MAX(upload_time) AS latest_survey,
+                    SUBSTRING_INDEX(GROUP_CONCAT(upload_time ORDER BY upload_time DESC), ',', 10) AS recent_surveies,
+                    COUNT(*) AS survey_count
+                FROM
+                    `survey_uploads`
+                WHERE
+                    is_uploaded = 1
+                GROUP BY id
+            ) AS survies
+            ON users.id = survies.id
+            LEFT JOIN (
+                SELECT
+                    id, MAX(timestamp) AS latest_upload,
+                    SUBSTRING_INDEX(GROUP_CONCAT(timestamp ORDER BY timestamp DESC), ',', 10) AS recent_uploads,
+                    COUNT(*) AS upload_count
+                FROM
+                    `uploads`
+                WHERE
+                    is_deleted = 0
+                GROUP BY id
+            ) AS uploads
+            ON users.id = uploads.id
+            WHERE
+                users.is_deleted = 0
+            ORDER BY users.id
+            '''
+        )
         rows = c.fetchall()
         for row in rows:
-            student_id = row['id']
-            if row['uploads']:
-                row['uploads'] = json.loads(row['uploads'], object_pairs_hook=OrderedDict)
-                row['uploads'] = list(row['uploads'].items())
-            c.execute(
-                '''SELECT
-                `timestamp`
-                FROM
-                `heartbeats`
-                WHERE
-                `id` = %s
-                ORDER BY
-                `timestamp`
-                DESC LIMIT 10''',
-                (student_id,))
-            out = c.fetchall()
-            row['heartbeats'] = [item['timestamp'].strftime("%m-%d %H:%M:%S") for item in out]
+            if row['recent_heartbeats']:
+                row['recent_heartbeats'] = row['recent_heartbeats'].split(',')
+            else:
+                row['recent_heartbeats'] = []
+            if row['recent_surveies']:
+                row['recent_surveies'] = row['recent_surveies'].split(',')
+            else:
+                row['recent_surveies'] = []
+            if row['recent_uploads']:
+                row['recent_uploads'] = row['recent_uploads'].split(',')
+            else:
+                row['recent_uploads'] = []
         return rows
 
 
@@ -660,4 +686,4 @@ def calc_sha1(file_path):
 
 init()
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)

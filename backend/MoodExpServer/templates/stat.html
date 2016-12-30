@@ -7,44 +7,26 @@
 <table border="1px" style="border-collapse:collapse">
     <caption>MoodExp统计分析</caption>
     <tr>
-        {% set row_span = 2 %}
-        {% for item in ['序号','姓名','学号','组别','电话','最后心跳'] %}
-            <th rowspan={{ row_span }}>{{ item }}</th>
+        {% for item in ['序号','姓名','学号／用户名','电话','最后心跳','最近心跳','最新版本','最后提交问卷','最近提交问卷','已提交问卷','最后上传','最近上传','已上传'] %}
+            <th>{{ item }}</th>
         {% endfor %}
-        <th colspan="2">提交记录</th>
-    </tr>
-    <tr>
-        <th>版本</th>
-        <th>提交</th>
     </tr>
     {% for student in students %}
-        {% set students_loop = loop %}
-        {% if student.uploads %}
-            {% set row_span = student.uploads|length %}
-            {% set index = 0 %}
-            {% for (version, counts) in student.uploads %}
-                {% set index = index + 1 %}
-                <tr>
-                    {% if index == 1 %}
-                        {% for item in [students_loop.index, student.name, student.id, student.class, student.phone] %}
-                            <td rowspan={{ row_span }} style="white-space:nowrap;">{{ item }}</td>
-                        {% endfor %}
-                        <td rowspan={{ row_span }} style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
-                    {% endif %}
-                    <td>{{ version }}</td>
-                    <td>{{ counts|join(' ') }}</td>
-                </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                {% for item in [students_loop.index, student.name, student.id, student.class, student.phone] %}
-                    <td style="white-space:nowrap;">{{ item }}</td>
-                {% endfor %}
-                <td style="white-space:nowrap;">{{ student.heartbeats|join('</br>'|safe) }}</td>
-                <td></td>
-                <td></td>
-            </tr>
-        {% endif %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ student.name if student.name is not none }}</td>
+            <td>{{ student.id }}</td>
+            <td>{{ student.phone if student.phone is not none }}</td>
+            <td>{{ student.latest_heartbeat if student.latest_heartbeat is not none }}</td>
+            <td>{{ student.recent_heartbeats|join('</br>'|safe) }}</td>
+            <td>{{ student.latest_version if student.latest_version is not none }}</td>
+            <td>{{ student.latest_survey if student.latest_survey is not none }}</td>
+            <td>{{ student.recent_surveies|join('</br>'|safe) }}</td>
+            <td>{{ student.survey_count if student.survey_count is not none }}</td>
+            <td>{{ student.latest_upload if student.latest_upload is not none }}</td>
+            <td>{{ student.recent_uploads|join('</br>'|safe) }}</td>
+            <td>{{ student.upload_count if student.upload_count is not none }}</td>
+        </tr>
     {% endfor %}
 </table>
 </body>
