@@ -6,11 +6,14 @@
 <body>
 <table border="1px" style="border-collapse:collapse">
     <caption>MoodExp统计分析</caption>
+    <thead>
     <tr>
         {% for item in ['序号','姓名','学号／用户名','电话','最后心跳','最近心跳','最新版本','最后提交问卷','最近提交问卷','已提交问卷','最后上传','最近上传','已上传'] %}
             <th>{{ item }}</th>
         {% endfor %}
     </tr>
+    </thead>
+    <tbody>
     {% for student in students %}
         <tr>
             <td>{{ loop.index }}</td>
@@ -28,6 +31,29 @@
             <td>{{ student.upload_count if student.upload_count is not none }}</td>
         </tr>
     {% endfor %}
+    </tbody>
 </table>
+<script src="{{ url_for('static',filename='js/jquery-3.1.1.min.js') }}"></script>
+<script>
+    $(document).on('click', 'th', function () {
+        var table = $(this).parents('table').eq(0);
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+        this.asc = !this.asc;
+        if (!this.asc) {
+            rows = rows.reverse();
+        }
+        table.children('tbody').empty().html(rows);
+    });
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index);
+            return $.isNumeric(valA) && $.isNumeric(valB) ?
+                valA - valB : valA.localeCompare(valB);
+        };
+    }
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).text();
+    }
+</script>
 </body>
 </html>
