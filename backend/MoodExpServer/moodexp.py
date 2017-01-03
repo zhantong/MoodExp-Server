@@ -206,6 +206,16 @@ def check_update():
         c = conn.cursor()
         c.execute("INSERT INTO `user_versions` (id, version) VALUES (%s, %s)", (student_id, student_version))
         conn.commit()
+        c.execute("SELECT version,url FROM `version_update_exception` WHERE id = %s AND is_enabled = 1", (student_id,))
+        version_url = c.fetchone()
+        if version_url:
+            app_version = version_url['version']
+            app_url = version_url['url']
+            if StrictVersion(student_version) < StrictVersion(app_version):
+                return json.dumps(
+                    {'status': True, 'has_update': True, 'latest_version': app_version, 'latest_url': app_url})
+            else:
+                return json.dumps({'status': True, 'has_update': False})
         c.execute("SELECT `value` FROM `meta` WHERE `name` = %s", 'version')
         app_version = c.fetchone()
         if app_version:
@@ -744,6 +754,18 @@ def init_db():
             report LONGTEXT,
             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (report_id)
+            )
+            '''
+        )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `version_update_exception`
+            (
+            id VARCHAR(40),
+            version VARCHAR(10),
+            url VARCHAR(100),
+            is_enabled TINYINT(1) DEFAULT 0,
+            PRIMARY KEY (id)
             )
             '''
         )
