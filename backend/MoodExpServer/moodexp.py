@@ -418,6 +418,29 @@ def questionnaireurl():
         return json.dumps({'status': True})
 
 
+@app.route('/crashReport', methods=['POST'])
+def crash_report():
+    report = request.data.decode('utf-8')
+    report_format = json.loads(report)
+    android_version = report_format.get('ANDROID_VERSION')
+    app_version_name = report_format.get('APP_VERSION_NAME')
+    brand = report_format.get('BRAND')
+    product = report_format.get('PRODUCT')
+    report_id = report_format.get('REPORT_ID')
+    crash_date = report_format.get('USER_CRASH_DATE')
+    id = None
+    if report_format['SHARED_PREFERENCES'] and report_format['SHARED_PREFERENCES']['default'] and \
+            report_format['SHARED_PREFERENCES']['default']['id']:
+        id = report_format['SHARED_PREFERENCES']['default']['id']
+    conn = get_db()
+    c = conn.cursor()
+    c.execute(
+        "INSERT IGNORE INTO `crash_reports` (report_id,id,android_version,app_version_name,brand,product,crash_date,report) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+        (report_id, id, android_version, app_version_name, brand, product, crash_date, report))
+    conn.commit()
+    return "OK"
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -707,6 +730,23 @@ def init_db():
             )
             '''
         )
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
+            `crash_reports`
+            (
+            report_id VARCHAR(50),
+            id VARCHAR(40),
+            android_version VARCHAR(20),
+            app_version_name VARCHAR(20),
+            brand VARCHAR(40),
+            product  VARCHAR(40),
+            crash_date DATETIME,
+            report LONGTEXT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (report_id)
+            )
+            '''
+        )
         conn.commit()
 
 
@@ -719,4 +759,4 @@ def calc_sha1(file_path):
 
 init()
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
