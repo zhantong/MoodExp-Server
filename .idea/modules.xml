@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MoodExpServer.iml" filepath="$PROJECT_DIR$/.idea/MoodExpServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MoodExp-Server.iml" filepath="$PROJECT_DIR$/.idea/MoodExp-Server.iml" />
     </modules>
   </component>
 </project>
