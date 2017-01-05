@@ -23,6 +23,7 @@ app = Flask(__name__)
 
 BACKUP = 'backup'
 UPLOAD = 'uploads'
+LOG_UPLOAD = 'log_uploads'
 SECONDARY_BACKUP = 'second_backup'
 DB_CONFIG_FILE = 'config.ini'
 DB_CONFIG = {
@@ -152,6 +153,30 @@ def upload():
         (student_id, count, app_version, sha1, upload_path, backup_path, second_backup_path, 0))
     conn.commit()
     return json.dumps({'status': True, 'sha1': sha1})
+
+
+@app.route('/uploadLog', methods=['POST'])
+def upload_log():
+    f = request.files['file']
+    student_id = request.form['id']
+    app_version = request.form['version']
+    filename = f.filename
+
+    upload_path = os.path.join(LOG_UPLOAD, app_version, student_id, filename)
+    os.makedirs(os.path.dirname(upload_path), exist_ok=True)
+    f.save(upload_path)
+
+    conn = get_db()
+    c = conn.cursor()
+    c.execute(
+        '''INSERT INTO
+        `log_uploads`
+        (`id`,`version`,`upload_path`,`is_deleted`)
+        VALUES
+        (%s,%s,%s,%s)''',
+        (student_id, app_version, upload_path, 0))
+    conn.commit()
+    return json.dumps({'status': True})
 
 
 @app.route('/statistic', methods=['GET'])
@@ -592,6 +617,19 @@ def init_db():
             ''')
         c.execute(
             '''CREATE TABLE IF NOT EXISTS
+            `log_uploads`
+            (
+            `auto_id` INT AUTO_INCREMENT,
+            `id` VARCHAR(40),
+            `version` VARCHAR(20),
+            `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `upload_path` VARCHAR(200),
+            `is_deleted` TINYINT DEFAULT 0,
+            PRIMARY KEY (`auto_id`)
+            )
+            ''')
+        c.execute(
+            '''CREATE TABLE IF NOT EXISTS
             `meta`
             (
             `name` VARCHAR(40),
@@ -781,4 +819,4 @@ def calc_sha1(file_path):
 
 init()
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
