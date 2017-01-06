@@ -271,7 +271,7 @@ def check_update():
 
 @app.route('/survey', methods=['GET'])
 def survey():
-    INTERVAL = timedelta(hours=5)
+    interval = timedelta(hours=5)
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
@@ -281,7 +281,7 @@ def survey():
     last_uplod_time = c.fetchone()
     if last_uplod_time:
         last_uplod_time = last_uplod_time['upload_time']
-        next_upload_time = last_uplod_time + INTERVAL
+        next_upload_time = last_uplod_time + interval
         if datetime.now() < next_upload_time:
             return json.dumps({'status': False, 'message': '您的提交频率太快，下次提交时间为：' + str(next_upload_time) + ' 之后'})
     survey_id = 1
@@ -298,25 +298,69 @@ def survey():
     question_ids = [item['question_id'] for item in c.fetchall()]
     for question_id in question_ids:
         c.execute(
-            "SELECT id, type, title, description, choices_id, children_id, has_title, has_description, has_choices, has_children FROM `question` WHERE id = %s",
+            '''
+            SELECT
+                id, type, title, description, choices_id, children_id, has_title, has_description,
+                has_choices, has_children
+            FROM
+                `question`
+            WHERE
+                id = %s
+            ''',
             (question_id,))
         question = c.fetchone()
         if question:
             if question['has_choices']:
                 c.execute(
-                    "SELECT b.id AS id,b.description AS description FROM `choices` AS a JOIN `choice` AS b ON a.choice_id = b.id WHERE a.id = %s",
+                    '''
+                    SELECT
+                        b.id AS id,b.description AS description
+                    FROM
+                        `choices` AS a
+                        JOIN
+                            `choice` AS b
+                        ON
+                            a.choice_id = b.id
+                    WHERE
+                        a.id = %s
+                    ''',
                     (question['choices_id']))
                 question['choices'] = c.fetchall()
             if question['has_children']:
                 c.execute(
-                    "SELECT b.id AS id, b.type AS type, b.title AS title, b.description AS description, b.choices_id AS choices_id, b.children_id AS children_id, b.has_title AS has_title, b.has_description AS has_description, b.has_choices AS has_choices, b.has_children AS has_children FROM `children` AS a JOIN `question` AS b ON a.question_id = b.id WHERE a.id = %s",
+                    '''
+                    SELECT
+                        b.id AS id, b.type AS type, b.title AS title, b.description AS description,
+                        b.choices_id AS choices_id, b.children_id AS children_id, b.has_title AS has_title,
+                        b.has_description AS has_description, b.has_choices AS has_choices,
+                        b.has_children AS has_children
+                    FROM
+                        `children` AS a
+                    JOIN
+                        `question` AS b
+                    ON
+                        a.question_id = b.id
+                    WHERE
+                        a.id = %s
+                    ''',
                     (question['children_id']))
                 child_questions = c.fetchall()
                 question['questions'] = []
                 for child_question in child_questions:
                     if child_question['has_choices']:
                         c.execute(
-                            "SELECT b.id AS id,b.description AS description FROM `choices` AS a JOIN `choice` AS b ON a.choice_id = b.id WHERE a.id = %s",
+                            '''
+                            SELECT
+                                b.id AS id,b.description AS description
+                            FROM
+                                `choices` AS a
+                            JOIN
+                                `choice` AS b
+                            ON
+                                a.choice_id = b.id
+                            WHERE
+                                a.id = %s
+                            ''',
                             (child_question['choices_id']))
                         child_question['choices'] = c.fetchall()
                     question['questions'].append(child_question)
@@ -396,24 +440,35 @@ def survey_stat():
     c.execute(
         "SELECT session, upload_time FROM `survey_uploads` WHERE id = %s AND is_uploaded = 1 ORDER BY upload_time",
         (student_id,))
-    surveies = c.fetchall()
-    surveies_by_day = {}
-    for survey in surveies:
-        survey_datetime = survey['upload_time']
-        session = survey['session']
+    upload_surveies = c.fetchall()
+    upload_surveies_by_day = {}
+    for upload_survey in upload_surveies:
+        survey_datetime = upload_survey['upload_time']
+        session = upload_survey['session']
         c.execute(
-            "SELECT question.title, answers.answer FROM `answers` AS answers, `question` AS question WHERE answers.question_id = question.id AND answers.session = %s ORDER BY question.id",
+            '''
+            SELECT
+                question.title, answers.answer
+            FROM
+                `answers` AS answers, `question` AS question
+            WHERE
+                answers.question_id = question.id
+                AND
+                answers.session = %s
+            ORDER BY
+                question.id
+            ''',
             (session,))
         content = c.fetchall()
         survey_date = survey_datetime.strftime('%Y-%m-%d')
-        if survey_date not in surveies_by_day:
-            surveies_by_day[survey_date] = []
-        surveies_by_day[survey_date].append({
+        if survey_date not in upload_surveies_by_day:
+            upload_surveies_by_day[survey_date] = []
+        upload_surveies_by_day[survey_date].append({
             'time': survey_datetime.strftime('%H:%M:%S'),
             'answers': content
         })
-    surveies_by_day = list(OrderedDict(sorted(surveies_by_day.items())).items())
-    return render_template('surveies_stat.html', surveies_by_day=surveies_by_day)
+    upload_surveies_by_day = list(OrderedDict(sorted(upload_surveies_by_day.items())).items())
+    return render_template('surveies_stat.html', surveies_by_day=upload_surveies_by_day)
 
 
 @app.route('/apk/<path:filename>', methods=['GET'])
@@ -463,15 +518,24 @@ def crash_report():
     product = report_format.get('PRODUCT')
     report_id = report_format.get('REPORT_ID')
     crash_date = report_format.get('USER_CRASH_DATE')
-    id = None
+    student_id = None
     if report_format['SHARED_PREFERENCES'] and report_format['SHARED_PREFERENCES']['default'] and \
             report_format['SHARED_PREFERENCES']['default']['id']:
-        id = report_format['SHARED_PREFERENCES']['default']['id']
+        student_id = report_format['SHARED_PREFERENCES']['default']['id']
     conn = get_db()
     c = conn.cursor()
     c.execute(
-        "INSERT IGNORE INTO `crash_reports` (report_id,id,android_version,app_version_name,brand,product,crash_date,report) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
-        (report_id, id, android_version, app_version_name, brand, product, crash_date, report))
+        '''
+        INSERT IGNORE INTO
+            `crash_reports`
+            (
+            report_id,id,android_version,app_version_name,
+            brand,product,crash_date,report
+            )
+        VALUES
+            (%s,%s,%s,%s,%s,%s,%s,%s)
+        ''',
+        (report_id, student_id, android_version, app_version_name, brand, product, crash_date, report))
     conn.commit()
     return "OK"
 
@@ -515,7 +579,9 @@ def get_statistic():
             LEFT JOIN (
                 SELECT
                     id,
-                    SUBSTRING_INDEX(GROUP_CONCAT(version ORDER BY INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) DESC),',',1) AS latest_version
+                    SUBSTRING_INDEX(
+                        GROUP_CONCAT(version ORDER BY INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) DESC),
+                    ',',1) AS latest_version
                 FROM
                     `user_versions`
                 GROUP BY id
@@ -819,4 +885,4 @@ def calc_sha1(file_path):
 
 init()
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
