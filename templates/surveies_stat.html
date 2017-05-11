@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>情绪问卷统计分析</title>
+    <title>{{ 'Statistical Analysis of Emotional Questionnaire' if language == 'en' else '情绪问卷统计分析' }}</title>
 </head>
 <body>
 {% for date, surveies in surveies_by_day %}
@@ -9,7 +9,7 @@
         <caption>{{ date }}</caption>
         <thead>
         <tr>
-            <th>时间</th>
+            <th>{{ 'Time' if language == 'en' else '时间' }}</th>
             {% for item in surveies[0]['answers'] %}
                 <th>{{ item['title'] }}</th>
             {% endfor %}

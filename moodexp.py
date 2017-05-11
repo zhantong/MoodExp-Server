@@ -271,6 +271,7 @@ def check_update():
 
 @app.route('/survey', methods=['GET'])
 def survey():
+    language = 'en' if 'en' in request.accept_languages else 'cn'
     interval = timedelta(hours=5)
     student_id = request.args.get('id')
     conn = get_db()
@@ -298,16 +299,16 @@ def survey():
     question_ids = [item['question_id'] for item in c.fetchall()]
     for question_id in question_ids:
         c.execute(
-            '''
+            f'''
             SELECT
-                id, type, title, description, choices_id, children_id, has_title, has_description,
-                has_choices, has_children
+                id, type, {'title_english' if language == 'en' else 'title'} AS title
+                , {'description_english' if language == 'en' else 'description'} AS description
+                , choices_id, children_id, has_title, has_description, has_choices, has_children
             FROM
                 `question`
             WHERE
-                id = %s
-            ''',
-            (question_id,))
+                id = {question_id}
+            ''')
         question = c.fetchone()
         if question:
             if question['has_choices']:
@@ -328,9 +329,11 @@ def survey():
                 question['choices'] = c.fetchall()
             if question['has_children']:
                 c.execute(
-                    '''
+                    f'''
                     SELECT
-                        b.id AS id, b.type AS type, b.title AS title, b.description AS description,
+                        b.id AS id, b.type AS type
+                        , b.{'title_english' if language == 'en' else 'title'} AS title
+                        , b.{'description_english' if language == 'en' else 'description'} AS description,
                         b.choices_id AS choices_id, b.children_id AS children_id, b.has_title AS has_title,
                         b.has_description AS has_description, b.has_choices AS has_choices,
                         b.has_children AS has_children
@@ -419,6 +422,7 @@ def submit_survey():
 
 @app.route('/surveyCount', methods=['GET'])
 def survey_count():
+    language = 'en' if 'en' in request.accept_languages else 'cn'
     student_id = request.args.get('id')
     conn = get_db()
     c = conn.cursor()
@@ -428,12 +432,14 @@ def survey_count():
     if count >= 30:
         message = '恭喜您已完成 30 次提交！当前已提交 {count} 次，目标次数为 60 次。'.format(count=count)
     return json.dumps({'status': True, 'count': count, 'max_count': 30, 'message': message,
-                       'url': request.url_root + 'surveyStat?id=' + student_id})
+                       'url': request.url_root + 'surveyStat?' + 'language=' + language + '&' + 'id=' + student_id})
 
 
 @app.route('/surveyStat', methods=['GET'])
 def survey_stat():
     student_id = request.args.get('id')
+    language = request.args.get('language')
+    print(student_id, language)
     conn = get_db()
     c = conn.cursor()
 
@@ -446,9 +452,9 @@ def survey_stat():
         survey_datetime = upload_survey['upload_time']
         session = upload_survey['session']
         c.execute(
-            '''
+            f'''
             SELECT
-                question.title, answers.answer
+                question.{'title_english' if language == 'en' else 'title'} AS title, answers.answer
             FROM
                 `answers` AS answers, `question` AS question
             WHERE
@@ -468,7 +474,7 @@ def survey_stat():
             'answers': content
         })
     upload_surveies_by_day = list(OrderedDict(sorted(upload_surveies_by_day.items())).items())
-    return render_template('surveies_stat.html', surveies_by_day=upload_surveies_by_day)
+    return render_template('surveies_stat.html', surveies_by_day=upload_surveies_by_day, language=language)
 
 
 @app.route('/apk/<path:filename>', methods=['GET'])
@@ -742,7 +748,9 @@ def init_db():
             id INT,
             type VARCHAR(20) NOT NULL,
             title VARCHAR(100),
+            title_english VARCHAR(100),
             description VARCHAR(200),
+            description_english VARCHAR(200),
             choices_id INT,
             children_id INT,
             has_title TINYINT(1) DEFAULT 0,
